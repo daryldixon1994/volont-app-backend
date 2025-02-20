@@ -1,17 +1,26 @@
-const User = require("../../models/User");
+const Association = require("../../models/Association");
 const bcrypt = require("bcrypt");
-const verifyEmail = require("../../lib/verifyEmail");
+const verifyEmail = require("../../lib/verifyEmailAsso");
 module.exports = async (req, res) => {
   try {
-    const { fullName, email, password, phone, address, age } = req.body;
-    const user = await User.findOne({ email });
-    if (user) {
+    const {
+      associationName,
+      email,
+      password,
+      category,
+      phone,
+      location,
+      description,
+      refNumber,
+    } = req.body;
+    const association = await Association.findOne({ email });
+    if (association) {
       return res
         .status(401)
         .json({ status: false, error: "This email is already in use" });
     }
-    const userCheckPhone = await User.findOne({ phone });
-    if (userCheckPhone) {
+    const associationCheckPhone = await Association.findOne({ phone });
+    if (associationCheckPhone) {
       return res
         .status(401)
         .json({ status: false, error: "This phone is already in use" });
@@ -29,20 +38,27 @@ module.exports = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({
-      fullName,
+    const newAssociation = new Association({
+      associationName,
       email,
       password: hashedPassword,
       phone,
-      address,
-      age,
+      category,
+      location,
+      description,
+      refNumber,
     });
-    const createdUser = await newUser.save();
+    const createdAssociation = await newAssociation.save();
 
-    verifyEmail(email, fullName, createdUser._id, req.get("origin"));
+    verifyEmail(
+      email,
+      associationName,
+      createdAssociation._id,
+      req.get("origin")
+    );
     res
       .status(200)
-      .json({ status: true, message: "User was created successfully" });
+      .json({ status: true, message: "Association was created successfully" });
   } catch (error) {
     // if (error) {
     //   console.log(error);
