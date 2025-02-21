@@ -3,8 +3,15 @@ const cloudinary = require("../../middlewares/cloudinary");
 const fs = require("fs");
 module.exports = async (req, res) => {
   try {
-    const { actName, actDate, actHour, location, description, volonteersNbr } =
-      req.body;
+    const {
+      actName,
+      actDate,
+      actHour,
+      location,
+      description,
+      volonteersNbr,
+      category,
+    } = req.body;
     const { clientId } = req;
     // console.log("file", req.file);
     const uploader = async (path) =>
@@ -21,6 +28,7 @@ module.exports = async (req, res) => {
       description,
       img: url,
       volonteersNbr,
+      category,
     });
     const act = await newAct.save();
     res.status(200).json({ status: true, data: act });

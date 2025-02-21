@@ -46,7 +46,10 @@ module.exports = async (req, res) => {
         expiresIn: "7d",
       }
     );
-    res.status(200).json({ status: true, data: { token } });
+    res.status(200).json({
+      status: true,
+      data: { token, category: checkAssoEmail.category },
+    });
   } catch (error) {
     console.log(error);
     res.status(406).json({ status: true, error });

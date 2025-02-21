@@ -38,6 +38,10 @@ const actSchema = new Schema({
   volonteersNbr: {
     type: String,
   },
+  category: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = Act = mongoose.model("acts", actSchema);
