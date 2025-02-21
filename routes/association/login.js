@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
       },
       SECRET_KEY,
       {
-        expiresIn: 60,
+        expiresIn: "7d",
       }
     );
     res.status(200).json({ status: true, data: { token } });

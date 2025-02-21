@@ -50,12 +50,12 @@ module.exports = async (req, res) => {
     });
     const createdAssociation = await newAssociation.save();
 
-    verifyEmail(
-      email,
-      associationName,
-      createdAssociation._id,
-      req.get("origin")
-    );
+    // verifyEmail(
+    //   email,
+    //   associationName,
+    //   createdAssociation._id,
+    //   req.get("origin")
+    // );
     res
       .status(200)
       .json({ status: true, message: "Association was created successfully" });

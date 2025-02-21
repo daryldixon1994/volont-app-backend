@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const connect = require("./lib/connect");
-
+const path = require("path")
 connect();
 const PORT = process.env.PORT || 5000;
 
@@ -13,6 +13,7 @@ app.use(
     origin: ["http://localhost:5173"],
   })
 );
+app.set(path.resolve("uploads"), "uploads")
 //user middleware
 app.use("/api/user", require("./routes/user"));
 app.use("/api/association", require("./routes/association"));

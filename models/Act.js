@@ -11,16 +11,18 @@ const actSchema = new Schema({
     required: true,
   },
   actHour: {
-    type: Date,
+    type: String,
     required: true,
   },
   users: {
     type: [mongoose.Types.ObjectId],
+    default: [],
     ref: "users",
   },
   associationId: {
     type: mongoose.Types.ObjectId,
     ref: "associations",
+    required: true,
   },
   location: {
     type: String,

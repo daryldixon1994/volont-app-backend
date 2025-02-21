@@ -14,7 +14,8 @@ module.exports = (req, res, next) => {
     if (err) {
       return res.status(401).json({ status: false, error: err.message });
     }
-    console.log(decoded);
-    return res.status(200).json({ message: "ok" });
+
+    req.clientId = decoded.id;
+    next();
   });
 };
