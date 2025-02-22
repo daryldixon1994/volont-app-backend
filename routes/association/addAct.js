@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
       category,
     } = req.body;
     const { clientId } = req;
-    // console.log("file", req.file);
     const uploader = async (path) =>
       await cloudinary.uploads(path, "volontApp");
     let { path } = req.file;

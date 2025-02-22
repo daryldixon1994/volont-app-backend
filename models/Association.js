@@ -54,7 +54,7 @@ const associationSchema = new Schema({
     default: false,
   },
   isActivated: { type: Boolean, default: false },
-});
+},{timestamps: true});
 
 module.exports = Association = mongoose.model(
   "associations",

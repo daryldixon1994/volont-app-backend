@@ -17,6 +17,7 @@ app.set(path.resolve("uploads"), "uploads")
 //user middleware
 app.use("/api/user", require("./routes/user"));
 app.use("/api/association", require("./routes/association"));
+app.use("/api/admin", require("./routes/admin"));
 
 app.listen(PORT, (err) => {
   if (err) throw err;

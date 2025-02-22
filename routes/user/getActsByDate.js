@@ -1,15 +1,18 @@
 const Act = require("../../models/Act");
-const mongoose = require("mongoose");
 
 module.exports = async (req, res) => {
   try {
-    const { clientId } = req;
-    const clientObjId = new mongoose.Types.ObjectId(clientId);
+    let { date } = req.query;
+
     const data = await Act.find({
-      associationId: clientObjId,
-    }).populate("users", "-password -isBanned -isVerified");
+      actDate: {
+        $lte: new Date(date).toISOString(),
+        $gte: new Date(),
+      },
+    }).populate("associationId", "associationName logo");
     res.status(200).json({ status: true, data });
   } catch (error) {
+    console.log(error);
     res.status(406).json({ status: false, error });
   }
 };

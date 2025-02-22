@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const adminSchema = new Schema(
   {
-    fullName: {
+    adminName: {
       type: String,
       minLength: [2, "Full Name length must have at least 3 characters"],
     },
@@ -23,27 +23,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    img: {
-      type: String,
-      default:
-        "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
-    },
-    address: {
-      type: String,
-    },
-    age: {
-      type: String,
-    },
-    isBanned: {
-      type: Boolean,
-      default: false,
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
   },
   { timestamps: true }
 );
 
-module.exports = User = mongoose.model("users", userSchema);
+module.exports = Admin = mongoose.model("admins", adminSchema);

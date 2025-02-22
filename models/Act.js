@@ -42,6 +42,8 @@ const actSchema = new Schema({
     type: String,
     required: true,
   },
-});
+},
+{timestamps: true}
+);
 
 module.exports = Act = mongoose.model("acts", actSchema);

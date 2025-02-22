@@ -37,6 +37,9 @@ route.get("/getOwnActs", verifyToken, require("./getOwnActs"));
 // getUser : /api/association/getUser/:id
 route.get("/getUser/:id", verifyToken, require("./getUser"));
 
+// get requests : /api/association/getRequests
+route.get("/getRequests", verifyToken, require("./getRequests"));
+
 // updateAssociation : /api/association/updateAssociation
 route.patch("/updateAssociation", verifyToken, require("./updateAssoDetails"));
 
@@ -47,4 +50,10 @@ route.patch(
   multer.single("photo"),
   require("./updateAssoImage")
 );
+
+// accept user : /api/association/acceptUser
+route.patch("/acceptUser", verifyToken, require("./acceptUser"));
+
+// accept user : /api/association/declineUser
+route.patch("/declineUser", verifyToken, require("./declineUser"));
 module.exports = route;
