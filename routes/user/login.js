@@ -26,6 +26,12 @@ module.exports = async (req, res) => {
         error: "Email is not verified! Please check your mailbox",
       });
     }
+    if (checkUserEmail.isBanned) {
+      return res.status(406).json({
+        status: false,
+        error: "You were banned for 15 days!",
+      });
+    }
     //   token
     const token = jwt.sign(
       {
