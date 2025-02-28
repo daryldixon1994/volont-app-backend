@@ -20,6 +20,11 @@ const actSchema = new Schema(
       default: [],
       ref: "users",
     },
+    pendingUsers: {
+      type: [mongoose.Types.ObjectId],
+      default: [],
+      ref: "users",
+    },
     associationId: {
       type: mongoose.Types.ObjectId,
       ref: "associations",

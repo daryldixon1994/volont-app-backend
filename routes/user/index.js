@@ -1,7 +1,8 @@
 const express = require("express");
 const route = express.Router();
 const verifyToken = require("../../middlewares/verifyToken");
-const multer = require("../../middlewares/multer")
+const compareIds = require("../../middlewares/compareIds");
+const multer = require("../../middlewares/multer");
 // register : /api/user/register
 route.post("/register", require("./register"));
 
@@ -24,7 +25,7 @@ route.get("/getAssociations", require("./getAssociations"));
 route.get("/getAssociation/:id", require("./getAssociation"));
 
 // send join request : /api/user/sendJoinRequest
-route.post("/sendRequest", verifyToken, require("./sendRequest"));
+route.post("/sendRequest", verifyToken, compareIds, require("./sendRequest"));
 
 // get join request : /api/user/getOwnRequests
 route.get("/getOwnRequests", verifyToken, require("./getOwnRequests"));
@@ -45,7 +46,12 @@ route.get("/getOwnInfos", verifyToken, require("./getOwnInfos"));
 route.patch("/updateInfos", verifyToken, require("./UpdateInfos"));
 
 // update profile image : /api/user/updateUserImage
-route.patch("/updateUserImage", verifyToken,multer.single("photo"), require("./updateUserImage"));
+route.patch(
+  "/updateUserImage",
+  verifyToken,
+  multer.single("photo"),
+  require("./updateUserImage")
+);
 
 // update email : /api/user/updateEmail
 route.patch("/updateEmail", verifyToken, require("./updateEmail"));

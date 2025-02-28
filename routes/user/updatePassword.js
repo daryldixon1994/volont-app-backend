@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     if (!checkPWD) {
       return res
         .status(401)
-        .json({ status: false, error: "Wrong Password or used email" });
+        .json({ status: false, error: "Wrong Password, please check again" });
     }
     const salt = bcrypt.genSaltSync(10);
     const hashPWD = bcrypt.hashSync(newPassword, salt);

@@ -5,6 +5,12 @@ module.exports = async (req, res) => {
   try {
     const { clientId } = req;
     const { newEmail, password } = req.body;
+    const checkEmailUser = await User.findOne({ email: newEmail });
+    if (checkEmailUser) {
+      return res
+        .status(406)
+        .json({ status: false, error: "Email already exists" });
+    }
     const user = await User.findById(clientId);
     const checkPWD = bcrypt.compareSync(password, user.password);
     if (!checkPWD || newEmail === user.email) {

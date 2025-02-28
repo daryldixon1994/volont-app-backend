@@ -37,14 +37,16 @@ module.exports = async (req, res) => {
       {
         id: checkUserEmail._id,
         email: checkUserEmail.email,
-        isLoggedIn: true,
+        isUser: true,
       },
       SECRET_KEY,
       {
         expiresIn: "1 day",
       }
     );
-    res.status(200).json({ status: true, data: { token } });
+    res
+      .status(200)
+      .json({ status: true, data: { token, userId: checkUserEmail._id } });
   } catch (error) {
     console.log(error);
     res.status(406).json({ status: true, error });

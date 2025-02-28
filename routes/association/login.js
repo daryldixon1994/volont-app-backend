@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
         id: checkAssoEmail._id,
         email: checkAssoEmail.email,
         refNumber: checkAssoEmail.refNumber,
-        isLoggedIn: true,
+        isAssociation: true,
       },
       SECRET_KEY,
       {
@@ -48,7 +48,11 @@ module.exports = async (req, res) => {
     );
     res.status(200).json({
       status: true,
-      data: { token, category: checkAssoEmail.category },
+      data: {
+        token,
+        category: checkAssoEmail.category,
+        assoId: checkAssoEmail._id,
+      },
     });
   } catch (error) {
     console.log(error);

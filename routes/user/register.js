@@ -6,33 +6,23 @@ module.exports = async (req, res) => {
     const { fullName, email, password, phone, address, age } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      return res
-        .status(401)
-        .json({ status: false, error: "This email is already in use" });
+      return res.status(401).json({
+        status: false,
+        error: { email: { message: "This email is already in use" } },
+      });
     }
     const userCheckPhone = await User.findOne({ phone });
     if (userCheckPhone) {
-      return res
-        .status(401)
-        .json({ status: false, error: "This phone is already in use" });
-    }
-    const pwdRegEx =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!pwdRegEx.test(password)) {
-      return res.status(406).json({
-        status: true,
-        error:
-          "Invalid Password: minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+      return res.status(401).json({
+        status: false,
+        error: { email: "This phone is already in use" },
       });
     }
-
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
       fullName,
       email,
-      password: hashedPassword,
+      password,
       phone,
       address,
       age,
@@ -45,8 +35,8 @@ module.exports = async (req, res) => {
       .json({ status: true, message: "User was created successfully" });
   } catch (error) {
     // if (error) {
-    //   console.log(error);
     // }
+    // console.log(error);
     res.status(401).json({ status: false, error: error.errors });
   }
 };
