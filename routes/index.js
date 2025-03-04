@@ -6,19 +6,29 @@ require("dotenv").config();
 route.get("/check-user/:token", (req, res) => {
   const SECRET_KEY = process.env.SECRET_KEY;
   const { token } = req.params;
-  const checkToken = jwt.verify(token, SECRET_KEY);
-  if (checkToken.isUser) {
-    return res.status(200).json({ isUserLoggedIn: true });
+  if (token) {
+    const checkToken = jwt.verify(token, SECRET_KEY);
+    if (checkToken.isUser) {
+      return res.status(200).json({ isUserLoggedIn: true });
+    }
+    return res.status(406).json({ isUserLoggedIn: false });
+  } else {
+    return res.status(401).json({ status: false, error });
   }
-  return res.status(406).json({ isUserLoggedIn: false });
 });
+
 route.get("/check-association/:token", (req, res) => {
   const SECRET_KEY = process.env.SECRET_KEY;
   const { token } = req.params;
   const checkToken = jwt.verify(token, SECRET_KEY);
-
-  if (checkToken.isAssociation) {
-    return res.status(200).json({ isAssoLoggedIn: true });
+  if (token) {
+    if (checkToken.isAssociation) {
+      return res.status(200).json({ isAssoLoggedIn: true });
+    }
+    return res.status(406).json({ isAssoLoggedIn: false });
+  } else {
+    return res.status(401).json({ status: false, error });
   }
-  return res.status(406).json({ isUserLoggedIn: false });
 });
+
+module.exports = route;
