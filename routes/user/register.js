@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     });
     const createdUser = await newUser.save();
 
-    // verifyEmail(email, fullName, createdUser._id, req.get("origin"));
+    verifyEmail(email, fullName, createdUser._id, req.get("origin"));
     res
       .status(200)
       .json({ status: true, message: "User was created successfully" });
