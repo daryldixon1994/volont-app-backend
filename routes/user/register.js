@@ -4,6 +4,7 @@ const verifyEmail = require("../../lib/verifyEmail");
 module.exports = async (req, res) => {
   try {
     const { fullName, email, password, phone, address, age } = req.body;
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(401).json({
@@ -15,7 +16,7 @@ module.exports = async (req, res) => {
     if (userCheckPhone) {
       return res.status(401).json({
         status: false,
-        error: { email: "This phone is already in use" },
+        error: { phone: { message: "This phone is already in use" } },
       });
     }
 
@@ -29,7 +30,7 @@ module.exports = async (req, res) => {
     });
     const createdUser = await newUser.save();
 
-    verifyEmail(email, fullName, createdUser._id, req.get("origin"));
+    // verifyEmail(email, fullName, createdUser._id, req.get("origin"));
     res
       .status(200)
       .json({ status: true, message: "User was created successfully" });

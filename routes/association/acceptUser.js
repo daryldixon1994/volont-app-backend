@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
         $push: {
           users: userId,
         },
+        $pull: {
+          pendingUsers: userId,
+        },
       },
       { new: true }
     );

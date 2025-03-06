@@ -59,4 +59,7 @@ route.patch("/updateEmail", verifyToken, require("./updateEmail"));
 // update email : /api/user/updatePassword
 route.patch("/updatePassword", verifyToken, require("./updatePassword"));
 
+// update email : /api/user/updatePassword
+route.patch("/resetPassword", require("./resetPassword"));
+
 module.exports = route;

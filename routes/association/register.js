@@ -13,35 +13,26 @@ module.exports = async (req, res) => {
       description,
       refNumber,
     } = req.body;
+
     const association = await Association.findOne({ email });
     if (association) {
-      return res
-        .status(401)
-        .json({ status: false, error: "This email is already in use" });
+      return res.status(401).json({
+        status: false,
+        error: { email: { message: "This email is already in use" } },
+      });
     }
     const associationCheckPhone = await Association.findOne({ phone });
     if (associationCheckPhone) {
-      return res
-        .status(401)
-        .json({ status: false, error: "This phone is already in use" });
-    }
-    const pwdRegEx =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!pwdRegEx.test(password)) {
-      return res.status(406).json({
-        status: true,
-        error:
-          "Invalid Password: minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+      return res.status(401).json({
+        status: false,
+        error: { phone: { message: "This phone is already in use" } },
       });
     }
-
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
 
     const newAssociation = new Association({
       associationName,
       email,
-      password: hashedPassword,
+      password,
       phone,
       category,
       location,

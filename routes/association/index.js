@@ -56,4 +56,7 @@ route.patch("/acceptUser", verifyToken, require("./acceptUser"));
 
 // accept user : /api/association/declineUser
 route.patch("/declineUser", verifyToken, require("./declineUser"));
+
+// accept user : /api/association/declineUser
+route.patch("/resetPassword", require("./resetPassword"));
 module.exports = route;

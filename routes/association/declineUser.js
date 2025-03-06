@@ -3,7 +3,7 @@ const JoinRequest = require("../../models/JoinRquest");
 
 module.exports = async (req, res) => {
   try {
-    const { requestId } = req.query;
+    const { requestId, userId, actId } = req.query;
     const newRequest = await JoinRequest.findByIdAndUpdate(
       requestId,
       {
@@ -14,7 +14,15 @@ module.exports = async (req, res) => {
       },
       { new: true }
     );
-
+    const newAct = await Act.findByIdAndUpdate(
+      actId,
+      {
+        $pull: {
+          pendingUsers: userId,
+        },
+      },
+      { new: true }
+    );
     return res.status(200).json({
       status: true,
       data: newRequest,
